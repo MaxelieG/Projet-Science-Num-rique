@@ -15,10 +15,10 @@ On considère un domaine rectangulaire :
 
 Méthodes utilisées
 
+L'équation instationnaire de la chaleur est une parabolique.
+
 1. Solution analytique
 
-La solution analytique est obtenue à partir du développement en série suivante :
-La série est tronquée après un certain nombre de termes pour l'approximation.
 
 2. Solution numérique
 
