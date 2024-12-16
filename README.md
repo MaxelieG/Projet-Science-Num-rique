@@ -6,8 +6,8 @@ Description du projet
 Ce projet implémente une résolution numérique de l'équation de la chaleur en régime instationnaire dans un domaine rectangulaire 2D avec conditions aux limites de type Dirichlet. La résolution numérique utilise un schéma explicite et est comparée à la solution analytique afin d'évaluer la précision.
 
 Contexte physique
-On considère un domaine rectangulaire :
 
+On considère un domaine rectangulaire :
 -Dimensions : $L_x \times L_y$
 -Conditions aux limites :
 -Température imposée $T_1$ sur la face $y=0$.
