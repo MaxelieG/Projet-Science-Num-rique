@@ -3,7 +3,7 @@
 
 Description du projet
 
-Ce projet implémente une résolution numérique de l'équation de la chaleur en régime instationnaire dans un domaine rectangulaire 2D avec conditions aux limites de type Dirichlet. La résolution numérique utilise un schéma explicite et est comparée à la solution analytique afin d'évaluer la précision.
+Ce projet implémente une résolution numérique de l'équation de la chaleur en régime instationnaire dans un domaine rectangulaire 2D avec conditions aux limites de type Dirichlet. La résolution numérique utilise un schéma implicite et est comparée à la solution analytique afin d'évaluer la précision.
 
 Contexte physique
 
@@ -22,8 +22,7 @@ La série est tronquée après un certain nombre de termes pour l'approximation.
 
 2. Solution numérique
 
-Le programme utilise un schéma explicite pour résoudre l'équation de la chaleur :
-Où $\alpha_x = \frac{a \Delta t}{\Delta x^2}$ et $\alpha_y = \frac{a \Delta t}{\Delta y^2}$.
+Le programme utilise une méthode implicite pure avec la technique des directions alternées (ADI), pour résoudre l'équation de la chaleur où $\alpha_x = \frac{a \Delta t}{\Delta x^2}$ et $\alpha_y = \frac{a \Delta t}{\Delta y^2}$.
 
 3. Comparaison et visualisation
 
