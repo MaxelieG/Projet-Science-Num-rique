@@ -22,33 +22,62 @@ temperature_list = np.zeros((Nx, Ny))
 ## Meshgrid ##
 
 x_list, y_list = np.linspace(0, Lx, Nx, dtype=int), np.linspace(0, Ly, Ny, dtype=int)
+print(x_list)
+print(y_list)
+print(dx)
+print(dy)
 
 X, Y = np.meshgrid(x_list, y_list)
+
+## Definition of the infinite sum ##
+
+def term_the_sum (n, x, y):
+
+    """Calculate term n of the sum
+
+    Parameters
+    ----------
+    n : int
+        index of the sum
+
+    x : float
+        x-position
+    
+    y : float
+        y-position
+    
+    Returns
+    -------
+    float
+        term n of the sum
+    
+    """
+
+    n_term = (1/(2*n + 1))*np.sin((2*n + 1)*np.pi*x/Lx)*np.sinh((Ly - y)*(2*n + 1)*np.pi/Lx)/np.sinh((2*n + 1)*np.pi*Ly/Lx)
+
+    return n_term
+
+def infinite_sum (x, y):
+
+    index = 0
+    sum = 0
+
+    while abs(term_the_sum(index, x, y) - term_the_sum(index + 1, x, y)) > 10**(-10):
+
+        sum += term_the_sum(index, x, y)
+        index += 1
+    
+    return sum
+
+### Calculation of the analytical solution ###
 
 for x in x_list:
 
     for y in y_list:
 
-
-
-        temperature = temperature_T2 + 4*(temperature_T1 - temperature_T2)/np.pi
-
-        sum_value = 0
-        rest = 10000
-        index = 0
-        stop_condition = 1
-
-        while stop_condition > 10**(10):
-
-            stop_condition = abs((1/(2*index + 1))*np.sin((2*index + 1)*np.pi*x/Lx)*np.sinh((Ly - y)*(2*index + 1)*np.pi/Lx)/np.sinh((2*index + 1)*np.pi*Ly/Lx))
-            sum_value += (1/(2*index + 1))*np.sin((2*index + 1)*np.pi*x/Lx)*np.sinh((Ly - y)*(2*index + 1)*np.pi/Lx)/np.sinh((2*index + 1)*np.pi*Ly/Lx)
-            index += 1
-
-        temperature += sum_value
+        temperature = temperature_T2 + 4*(temperature_T1 - temperature_T2)*infinite_sum(x, y)/np.pi 
 
         temperature_list[x, y] = temperature
-
-
 
 plt.matshow(temperature_list)
 plt.show()
