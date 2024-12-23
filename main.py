@@ -1,5 +1,6 @@
 import numpy as np 
 import matplotlib.pyplot as plt
+from TDMA import TDMAsolver
 
 
 ### Initialization ###
@@ -9,15 +10,15 @@ import matplotlib.pyplot as plt
 Lx, Ly = 100, 100
 Nx, Ny = 101, 101
 dx, dy, = Lx/Nx, Ly/Ny
-dt = 0
+
 
 ## Physical parameters ##
 
 temperature_init = 50
-temperature_T1 = 100
-temperature_T2 = 150
+temperature_T1 = 150
+temperature_T2 = 100
 thermal_diffusivity = 0
-temperature_list = np.zeros((Nx, Ny))
+temperature_analytical_list = np.zeros((Nx, Ny))
 
 ## Meshgrid ##
 
@@ -53,7 +54,12 @@ for x in x_list:
 
         temperature = temperature_T2 + 4*(temperature_T1 - temperature_T2)*infinite_sum(x, y)/np.pi 
 
-        temperature_list[x, y] = temperature
+        temperature_analytical_list[x, y] = temperature
 
-plt.matshow(temperature_list)
+
+plt.matshow(temperature_analytical_list, cmap = "hot")
+plt.title("Solution analytique")
+plt.colorbar()
+
+
 plt.show()
