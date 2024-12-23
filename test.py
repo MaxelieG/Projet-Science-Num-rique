@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from TDMA import TDMAsolver  
+from TDMA import TDMAsolver 
 
 # Physical parameters
 thermal_conductivity = 30  # (in W.m^-1.K^-1)
@@ -43,18 +43,13 @@ Nt = 0
 # Iteration loop
 
 plt.figure("Profil de température")
-plt.plot(np.linspace(0, Nx, Nx), temperature, label = str(time))
+plt.plot(np.linspace(0, Nx, Nx), temperature, label = str(f"Time = {time:.2f} s"))
 while time < simulation_time:
     # Print current time
     print(f"Time = {time:.2f} s")
 
 
-    #print(Nt)
-
     temperature = TDMAsolver(a.copy(), b.copy(), c.copy(), temperature.copy())
-    temperature[0], temperature[-1] = temperature_water, temperature_water
-    
-
 
     # Update time
     time += dt
@@ -62,7 +57,11 @@ while time < simulation_time:
 
 
     if Nt%15000 == 0:
-        plt.plot(np.linspace(0, Nx, Nx), temperature, label = f"Time = {time:.2f} s")
+            plt.plot(np.linspace(0, Nx, Nx), temperature, label = f"Time = {time:.2f} s")
 
-plt.legend()
+
+plt.legend(ncol = 2)
+plt.xlabel("Longueur (en %)")
+plt.ylabel("Température (en K)")
+plt.title("Evolution de la température le long de la barre en fonction du temps")
 plt.show()
