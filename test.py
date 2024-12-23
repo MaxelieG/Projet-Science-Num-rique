@@ -18,50 +18,50 @@ dx = Lx / Nx  # Grid spacing
 temperature_init = 80 + 273  # Initial temperature (in Kelvin)
 temperature_water = 20 + 273  # Boundary temperature (in Kelvin)
 
-# Initialization
-temperature = np.ones(Nx) * temperature_init
+
+### Initialization ###
+
+temperature = np.ones((Nx))*temperature_init
 temperature[0], temperature[-1] = temperature_water, temperature_water
 
-simulation_time = 15  # Time of simulation (in seconds)
-dt = 0.01  # Time step
+simulation_time = 5 #Time of simulation
+dt = 0.0005 #Time steps to respect stability criteria
 print(f"Time step: {dt}")
 
-# Fourier coefficient
-fourrier_coeff = thermal_diffusivity * dt / (dx**2)
-if fourrier_coeff > 0.5:
-    print("Warning: Fourier coefficient too large for stability!")
 
-a = np.concatenate([np.array([0]), np.ones(Nx - 1) * (-fourrier_coeff)])
-b = np.ones(Nx) * (1 + 2 * fourrier_coeff)
-c = np.concatenate([np.ones(Nx - 1) * (-fourrier_coeff), np.array([0])])
+fourrier_coeff = thermal_diffusivity*dt/(dx**2)
+
+c = np.concatenate([np.array([0]), np.ones((Nx-1))*(-fourrier_coeff)])
+b = np.concatenate([np.array([1]), np.ones((Nx-2))*(1+2*fourrier_coeff), np.array([1])])
+a = np.concatenate([np.ones((Nx-1))*(-fourrier_coeff), np.array([0])])
 
 time = 0
 Nt = 0
 
+
 # Iteration loop
+
 plt.figure("Profil de température")
+plt.plot(np.linspace(0, Nx, Nx), temperature, label = str(time))
 while time < simulation_time:
     # Print current time
     print(f"Time = {time:.2f} s")
 
-    # Solve the system using TDMA
-    temperature = TDMAsolver(a.copy(), b.copy(), c.copy(), temperature.copy())
 
-    # Enforce boundary conditions
-    temperature[0], temperature[-1] = temperature_water, temperature_water
+    #print(Nt)
+
+    temperature = TDMA.TDMAsolver(a.copy(), b.copy(), c.copy(), temperature.copy())
+    #temperature[0], temperature[-1] = temperature_water, temperature_water
+    
+
 
     # Update time
     time += dt
     Nt += 1
 
-# Final result
-print("Final temperature distribution:")
-print(temperature)
 
-# Plot the temperature profile
-plt.plot(np.linspace(0, Lx, Nx), temperature, label="Final Temperature")
-plt.xlabel("Position (m)")
-plt.ylabel("Temperature (K)")
-plt.title("Temperature Profile")
-plt.legend()
+    if Nt%150 == 0:
+        plt.plot(np.linspace(0, Nx, Nx), temperature, label = str(time))
+
+
 plt.show()
