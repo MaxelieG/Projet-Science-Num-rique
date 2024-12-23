@@ -4,11 +4,11 @@ def TDMAsolver(a, b, c, d):
 
     Parameters:
     a : list of floats
-        Sub-diagonal elements of the matrix (a[0] is unused -> Must add a 0 at the begining of the list).
+        Sub-diagonal elements of the matrix (a[0] is unused -> Must add a 0 at the beginning of the list).
     b : list of floats
         Diagonal elements of the matrix.
     c : list of floats
-        Super-diagonal elements of the matrix (c[-1] is unused -> Must add a 0 at the end of the list).
+        Super-diagonal elements of the matrix (c[-1] is not used in calculations, but the list should have the same length as b and d).
     d : list of floats
         Right-hand side of the equation.
 
