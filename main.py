@@ -15,43 +15,19 @@ dt = 0
 
 temperature_init = 50
 temperature_T1 = 100
-temperature_T2 = 0
+temperature_T2 = 150
 thermal_diffusivity = 0
 temperature_list = np.zeros((Nx, Ny))
 
 ## Meshgrid ##
 
 x_list, y_list = np.linspace(0, Lx, Nx, dtype=int), np.linspace(0, Ly, Ny, dtype=int)
-print(x_list)
-print(y_list)
-print(dx)
-print(dy)
 
 X, Y = np.meshgrid(x_list, y_list)
 
 ## Definition of the infinite sum ##
 
 def term_the_sum (n, x, y):
-
-    """Calculate term n of the sum
-
-    Parameters
-    ----------
-    n : int
-        index of the sum
-
-    x : float
-        x-position
-    
-    y : float
-        y-position
-    
-    Returns
-    -------
-    float
-        term n of the sum
-    
-    """
 
     n_term = (1/(2*n + 1))*np.sin((2*n + 1)*np.pi*x/Lx)*np.sinh((Ly - y)*(2*n + 1)*np.pi/Lx)/np.sinh((2*n + 1)*np.pi*Ly/Lx)
 
