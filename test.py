@@ -30,7 +30,6 @@ print(f"Time step: {dt}")
 
 
 fourrier_coeff = thermal_diffusivity*dt/(dx**2)
-print(fourrier_coeff)
 
 c = np.concatenate([np.array([0]), np.ones((Nx-1))*(-fourrier_coeff)])
 b = np.concatenate([np.array([1]), np.ones((Nx-2))*(1+2*fourrier_coeff), np.array([1])])
@@ -47,7 +46,7 @@ plt.figure("Profil de température")
 plt.plot(np.linspace(0, Nx, Nx), temperature, label = str(f"Time = {time:.2f} s"))
 while time < simulation_time:
     # Print current time
-   # print(f"Time = {time:.2f} s")
+    print(f"Time = {time:.2f} s")
 
 
     temperature = TDMAsolver(a.copy(), b.copy(), c.copy(), temperature.copy())
