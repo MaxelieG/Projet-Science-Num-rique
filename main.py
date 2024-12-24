@@ -6,24 +6,23 @@ import matplotlib.pyplot as plt
 
 ## Discretization parameters ##
 
-Lx, Ly = 100, 100
-Nx, Ny = 101, 101
+Lx, Ly = 1, 1
+Nx, Ny = 100, 100
 dx, dy, = Lx/Nx, Ly/Ny
 dt = 0
 
 ## Physical parameters ##
 
 temperature_init = 50
-temperature_T1 = 100
-temperature_T2 = 150
+temperature_T1 = 150
+temperature_T2 = 100
 thermal_diffusivity = 0
 temperature_list = np.zeros((Nx, Ny))
 
 ## Meshgrid ##
 
-x_list, y_list = np.linspace(0, Lx, Nx, dtype=int), np.linspace(0, Ly, Ny, dtype=int)
+x_list, y_list = np.linspace(0, Lx, Nx), np.linspace(0, Ly, Ny)
 
-X, Y = np.meshgrid(x_list, y_list)
 
 ## Definition of the infinite sum ##
 
@@ -47,13 +46,15 @@ def infinite_sum (x, y):
 
 ### Calculation of the analytical solution ###
 
-for x in x_list:
+for i, x in enumerate(x_list):
 
-    for y in y_list:
+    for j, y in enumerate(y_list):
 
         temperature = temperature_T2 + 4*(temperature_T1 - temperature_T2)*infinite_sum(x, y)/np.pi 
 
-        temperature_list[x, y] = temperature
+        temperature_list[i, j] = temperature
 
-plt.matshow(temperature_list)
+
+plt.matshow(temperature_list, cmap = "hot")
+plt.colorbar()
 plt.show()
