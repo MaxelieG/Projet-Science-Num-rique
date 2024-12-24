@@ -10,7 +10,7 @@ from TDMA import TDMAsolver
 Lx, Ly = 100, 100
 Nx, Ny = 101, 101
 dx, dy, = Lx/Nx, Ly/Ny
-simulation_time = 300
+simulation_time = 600
 dt = 0.1
 
 ## Physical parameters ##
@@ -20,7 +20,7 @@ temperature_T1 = 150
 temperature_T2 = 100
 
 # For a steel plate
-thermal_conductivity = 3000  # (in W.m^-1.K^-1)
+thermal_conductivity = 3000000  # (in W.m^-1.K^-1)
 density = 500  # (in kg.m^-3)
 heat_capacity = 520  # (in J.kg^-1.K^-1)
 
