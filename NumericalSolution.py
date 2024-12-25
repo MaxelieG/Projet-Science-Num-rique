@@ -56,8 +56,10 @@ def runtime_program (beginning_date_and_time):
 Lx, Ly = 10*10**(-2), 10*10**(-2)
 Nx, Ny = 100, 100
 dx, dy, = Lx/Nx, Ly/Ny
+
 simulation_time = 60
 dt = 0.01
+
 
 ## Physical parameters ##
 
@@ -66,8 +68,10 @@ temperature_T1 = 150
 temperature_T2 = 100
 
 # For a steel plate
+
 thermal_conductivity = 30 # (in W.m^-1.K^-1)
 density = 8000  # (in kg.m^-3)
+
 heat_capacity = 520  # (in J.kg^-1.K^-1)
 
 thermal_diffusivity = thermal_conductivity / (density * heat_capacity)  # (in m^2.s^-1)

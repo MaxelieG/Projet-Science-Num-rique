@@ -10,7 +10,7 @@ heat_capacity = 520  # (in J.kg^-1.K^-1)
 thermal_diffusivity = thermal_conductivity / (density * heat_capacity)  # (in m^2.s^-1)
 
 # Discretization
-Lx = 10*10**(-2)  # Length of the domain
+Lx = 10**(-2)  # Length of the domain
 Nx = 100  # Number of grid points
 dx = Lx / Nx  # Grid spacing
 
@@ -24,7 +24,7 @@ temperature_water = 20 + 273  # Boundary temperature (in Kelvin)
 temperature = np.ones((Nx))*temperature_init
 temperature[0], temperature[-1] = temperature_water, temperature_water
 
-simulation_time = 360 #Time of simulation
+simulation_time = 10 #Time of simulation
 dt = 0.001 #Time steps to respect stability criteria
 print(f"Time step: {dt}")
 
@@ -56,7 +56,7 @@ while time < simulation_time:
     Nt += 1
 
 
-    if Nt%15000 == 0:
+    if Nt%150 == 0:
             plt.plot(np.linspace(0, Nx, Nx), temperature, label = f"Time = {time:.2f} s")
 
 
