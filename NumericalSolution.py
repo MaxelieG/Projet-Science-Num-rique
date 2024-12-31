@@ -25,6 +25,7 @@ def solution(simulation_time, Nx, Ny, dt, x_fourrier_coeff, y_fourrier_coeff, x_
     #Initialization
     time = 0
     Nt = 0
+    numerical_solution_total = []
 
     while time < simulation_time:
 
@@ -55,8 +56,9 @@ def solution(simulation_time, Nx, Ny, dt, x_fourrier_coeff, y_fourrier_coeff, x_
         # Update time
         time += dt
         Nt += 1
+        numerical_solution_total.append(temperature_list.copy())
 
-    return temperature_list
+    return numerical_solution_total
 
 
 
