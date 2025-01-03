@@ -76,6 +76,10 @@ numerical_solution_total = NumericalSolution.solution(simulation_time, Nx, Ny, d
 
 temperature_error = np.abs(temperature_analytical_list - numerical_solution_total[-1])
 
+## Estimation of the caracteristic time of evolution of the system ##
+
+
+
 
 ### Plotting ###
 

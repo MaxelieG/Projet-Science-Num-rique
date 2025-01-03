@@ -61,4 +61,9 @@ def solution(simulation_time, Nx, Ny, dt, x_fourrier_coeff, y_fourrier_coeff, x_
     return numerical_solution_total
 
 
+### Calculation of the caracteristic time ###
 
+
+def caracteristic_time ():
+
+    return None
