@@ -16,10 +16,10 @@ SAVE_ANIMATION = False
 ## Discretization ##
 
 Lx, Ly = 10*10**(-2), 10*10**(-2)
-Nx, Ny = 100, 100
+Nx, Ny = 10, 10
 dx, dy, = Lx/Nx, Ly/Ny
 
-simulation_time = 45
+simulation_time = 40
 dt = 0.01
 
 
@@ -66,22 +66,18 @@ temperature_analytical_list = AnalyticalSolution.solution(x_list, y_list, Lx, Ly
 
 ## Numerical solutions ##
 
-
 x_a_lign, x_b_lign, x_c_lign, y_a_lign, y_b_lign, y_c_lign = NumericalSolution.system_matrix(Nx, Ny, x_fourrier_coeff, y_fourrier_coeff)
 numerical_solution_total = NumericalSolution.solution(simulation_time, Nx, Ny, dt, x_fourrier_coeff, y_fourrier_coeff, x_list, y_list, temperature_init_list.copy(), 
-                                                        temperature_T1, temperature_T2, x_a_lign, x_b_lign, x_c_lign, y_a_lign, y_b_lign, y_c_lign)
+                                                     temperature_T1, temperature_T2, x_a_lign, x_b_lign, x_c_lign, y_a_lign, y_b_lign, y_c_lign)
+
 
 
 ## Difference between analytical and numerical solution ##
 
-temperature_error = np.abs(temperature_analytical_list - numerical_solution_total[-1])
+temperature_difference = np.abs(temperature_analytical_list - numerical_solution_total[-1])
+
 
 ## Estimation of the caracteristic time of evolution of the system ##
-
-
-
-
-## Estimation of the caracteristic time of evolution ##
 
 evolution_time = NumericalSolution.caracteristic_time(numerical_solution_total, dt)
 
@@ -118,13 +114,11 @@ if SAVE_ANIMATION:
     ani.save('evolution_temperature.mp4', fps=10, extra_args=['-vcodec', 'libx264'])
     print("Animation sauvegardée")
 
-# ----------------------------- #
-
 figure = plt.figure("result_heat_2D", constrained_layout=True)
 
 Graph.heatmap_plot(figure, temperature_analytical_list, "Solution analytique", 1)
 Graph.heatmap_plot(figure, numerical_solution_total[-1], "Solution numérique", 2)
-Graph.heatmap_plot(figure, temperature_error, "|Analytique - Numérique|", 3)
+Graph.heatmap_plot(figure, temperature_difference, "|Analytique - Numérique|", 3)
 
 plt.suptitle("Conduction instationnaire en 2D dans une plaque d'acier (simulation de " + str(simulation_time)+"s)", fontsize = 16)
 
