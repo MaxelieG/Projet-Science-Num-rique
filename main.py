@@ -19,7 +19,7 @@ Lx, Ly = 10*10**(-2), 10*10**(-2)
 Nx, Ny = 100, 100
 dx, dy, = Lx/Nx, Ly/Ny
 
-simulation_time = 1
+simulation_time = 45
 dt = 0.01
 
 
@@ -81,6 +81,15 @@ temperature_error = np.abs(temperature_analytical_list - numerical_solution_tota
 
 
 
+## Estimation of the caracteristic time of evolution ##
+
+evolution_time = NumericalSolution.caracteristic_time(numerical_solution_total, dt)
+
+if evolution_time == None :
+    print("Etat stationnaire non atteint durant la simulation")
+else:
+    print(f"Temps caractéristique d'évolution de la solution vers le régime stationnaire: {(evolution_time):.2f}s ")
+
 ### Plotting ###
 
 ## Animation initialization ##
@@ -118,8 +127,6 @@ Graph.heatmap_plot(figure, numerical_solution_total[-1], "Solution numérique", 
 Graph.heatmap_plot(figure, temperature_error, "|Analytique - Numérique|", 3)
 
 plt.suptitle("Conduction instationnaire en 2D dans une plaque d'acier (simulation de " + str(simulation_time)+"s)", fontsize = 16)
-
-plt.subplots_adjust(left=0.05, right=0.95, top=0.55, bottom=0.15)
 
 
 ### Runtime ###

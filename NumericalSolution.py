@@ -61,9 +61,22 @@ def solution(simulation_time, Nx, Ny, dt, x_fourrier_coeff, y_fourrier_coeff, x_
     return numerical_solution_total
 
 
-### Calculation of the caracteristic time ###
 
+### Estimation of the time to reach the stationnary state ###
 
-def caracteristic_time ():
+def caracteristic_time (all_temperature, dt):
 
+    previous_temperature = all_temperature[0]
+
+    for index, temperature in enumerate(all_temperature[1:]):
+
+        if np.mean(np.abs(previous_temperature - temperature)) < 10**(-5):
+
+            time = index*dt
+            
+            return time
+
+        previous_temperature = temperature
+    
     return None
+
