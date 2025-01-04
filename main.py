@@ -30,7 +30,7 @@ temperature_T1 = 150
 temperature_T2 = 100
 temperature_init_list = np.zeros((Nx, Ny))*temperature_init
 
-# For a steel plate
+# For a steel plate (x10)
 thermal_conductivity = 30 # (in W.m^-1.K^-1)
 density = 800  # (in kg.m^-3)
 heat_capacity = 520  # (in J.kg^-1.K^-1)
