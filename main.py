@@ -11,15 +11,15 @@ import Graph
 ### Initialization ###
 
 beginning_date_and_time = dtm.datetime.now()
-SAVE_ANIMATION = False
+SAVE_ANIMATION = True
 
 ## Discretization ##
 
 Lx, Ly = 10*10**(-2), 10*10**(-2)
-Nx, Ny = 10, 10
+Nx, Ny = 100, 100
 dx, dy, = Lx/Nx, Ly/Ny
 
-simulation_time = 40
+simulation_time = 60
 dt = 0.01
 
 
@@ -30,12 +30,12 @@ temperature_T1 = 150
 temperature_T2 = 100
 temperature_init_list = np.zeros((Nx, Ny))*temperature_init
 
-# For a steel plate (x10)
+# For a steel plate
 thermal_conductivity = 30 # (in W.m^-1.K^-1)
-density = 800  # (in kg.m^-3)
+density = 8000  # (in kg.m^-3)
 heat_capacity = 520  # (in J.kg^-1.K^-1)
 
-thermal_diffusivity = thermal_conductivity / (density * heat_capacity)  # (in m^2.s^-1)
+thermal_diffusivity = 10 * thermal_conductivity / (density * heat_capacity)  # (in m^2.s^-1)
 
 
 ## Meshgrid ##
@@ -114,13 +114,32 @@ if SAVE_ANIMATION:
     ani.save('evolution_temperature.mp4', fps=10, extra_args=['-vcodec', 'libx264'])
     print("Animation sauvegardée")
 
-figure = plt.figure("result_heat_2D", constrained_layout=True)
 
-Graph.heatmap_plot(figure, temperature_analytical_list, "Solution analytique", 1)
-Graph.heatmap_plot(figure, numerical_solution_total[-1], "Solution numérique", 2)
-Graph.heatmap_plot(figure, temperature_difference, "|Analytique - Numérique|", 3)
+fig, axs = plt.subplots(1, 3, figsize=(15, 5))  # 3 subplots sur une ligne, plus grand pour plus de clarté
 
-plt.suptitle("Conduction instationnaire en 2D dans une plaque d'acier (simulation de " + str(simulation_time)+"s)", fontsize = 16)
+# Subplot 1
+im1 = axs[0].matshow(temperature_analytical_list, cmap="hot")
+axs[0].set_title("Solution analytique")
+axs[0].set_xlabel("Lx")
+axs[0].set_ylabel("Ly")
+fig.colorbar(im1, ax=axs[0], fraction=0.046, pad=0.04)  # Barre de couleurs pour ce subplot
+
+# Subplot 2
+im2 = axs[1].matshow(numerical_solution_total[-1], cmap="hot")
+axs[1].set_title("Solution numérique")
+axs[1].set_xlabel("Lx")
+fig.colorbar(im2, ax=axs[1], fraction=0.046, pad=0.04)  # Barre de couleurs pour ce subplot
+
+# Subplot 3
+im3 = axs[2].matshow(temperature_difference, cmap="seismic")
+axs[2].set_title("|Analytique - Numérique|")
+axs[2].set_xlabel("Lx")
+fig.colorbar(im3, ax=axs[2], fraction=0.046, pad=0.04)  # Barre de couleurs pour ce subplot
+
+# Titre général
+plt.suptitle(f"Conduction instationnaire en 2D dans une plaque d'acier (simulation de {simulation_time}s)", fontsize=16)
+
+plt.tight_layout()
 
 
 ### Runtime ###

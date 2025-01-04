@@ -30,7 +30,7 @@ def solution(simulation_time, Nx, Ny, dt, x_fourrier_coeff, y_fourrier_coeff, x_
     while time < simulation_time:
 
         # Print current time
-        #print(f"Time = {time:.2f} s")
+        print(f"Time = {time:.2f} s")
 
         # Boundary conditions
         temperature_list[:, 0] = temperature_T1
