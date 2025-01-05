@@ -11,7 +11,7 @@ import Graph
 ### Initialization ###
 
 beginning_date_and_time = dtm.datetime.now()
-SAVE_ANIMATION = True
+SAVE_ANIMATION = False
 
 ## Discretization ##
 
@@ -19,7 +19,7 @@ Lx, Ly = 10*10**(-2), 10*10**(-2)
 Nx, Ny = 100, 100
 dx, dy, = Lx/Nx, Ly/Ny
 
-simulation_time = 60
+simulation_time = 1
 dt = 0.01
 
 
@@ -92,7 +92,7 @@ else:
 print("Création de l'animation")
 # Création de la figure
 fig, ax = plt.subplots()
-heatmap = ax.imshow(numerical_solution_total[0], cmap='hot', interpolation='nearest')
+heatmap = ax.imshow(numerical_solution_total[0], cmap='hot', interpolation='nearest',  aspect = dx/dy)
 ax.set_title("Évolution de la température")
 cbar = plt.colorbar(heatmap, ax=ax)  # Ajouter une barre de couleur
 cbar.set_label('Température (°C)')
@@ -118,22 +118,22 @@ if SAVE_ANIMATION:
 fig, axs = plt.subplots(1, 3, figsize=(15, 5))  # 3 subplots sur une ligne, plus grand pour plus de clarté
 
 # Subplot 1
-im1 = axs[0].matshow(temperature_analytical_list, cmap="hot")
+im1 = axs[0].matshow(temperature_analytical_list, cmap="hot", aspect = dx/dy)
 axs[0].set_title("Solution analytique")
-axs[0].set_xlabel("Lx")
-axs[0].set_ylabel("Ly")
+axs[0].set_xlabel("Ly")
+axs[0].set_ylabel("Lx")
 fig.colorbar(im1, ax=axs[0], fraction=0.046, pad=0.04)  # Barre de couleurs pour ce subplot
 
 # Subplot 2
-im2 = axs[1].matshow(numerical_solution_total[-1], cmap="hot")
+im2 = axs[1].matshow(numerical_solution_total[-1], cmap="hot", aspect = dx/dy)
 axs[1].set_title("Solution numérique")
-axs[1].set_xlabel("Lx")
+axs[1].set_xlabel("Ly")
 fig.colorbar(im2, ax=axs[1], fraction=0.046, pad=0.04)  # Barre de couleurs pour ce subplot
 
 # Subplot 3
-im3 = axs[2].matshow(temperature_difference, cmap="seismic")
+im3 = axs[2].matshow(temperature_difference, cmap="seismic", aspect = dx/dy)
 axs[2].set_title("|Analytique - Numérique|")
-axs[2].set_xlabel("Lx")
+axs[2].set_xlabel("Ly")
 fig.colorbar(im3, ax=axs[2], fraction=0.046, pad=0.04)  # Barre de couleurs pour ce subplot
 
 # Titre général

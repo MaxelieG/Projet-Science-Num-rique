@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
-fig, axs = plt.subplots(1, 3, figsize=(10, 4))  # 3 subplots sur une ligne
-for ax in axs:
-    ax.plot([1, 2, 3], [1, 4, 9])
-    ax.set_title("Titre")
+# Données pour la heatmap
+data = np.random.rand(5, 10)
 
-fig.tight_layout()  # Ajustement automatique
+# Création de la heatmap
+plt.imshow(data, cmap='viridis', aspect=0.5)  # Changez "aspect" pour ajuster la forme des cellules
+plt.colorbar()
 plt.show()
-
-# ghlyfv
