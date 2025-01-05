@@ -7,3 +7,5 @@ for ax in axs:
 
 fig.tight_layout()  # Ajustement automatique
 plt.show()
+
+# ghlyfv
