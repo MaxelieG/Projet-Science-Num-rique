@@ -4,6 +4,7 @@ import datetime as dtm
 import AnalyticalSolution
 import NumericalSolution
 import Calculation
+import scipy.stats
 
 
 ### Initialization ###
@@ -14,13 +15,13 @@ beginning_date_and_time = dtm.datetime.now()
 
 Lx, Ly = 10*10**(-2), 10*10**(-2)
 
-Nx_min, Nx_max = 5, 100
-Nx_step = 20
+Nx_min, Nx_max = 20, 100
+Nx_step = 10
 Nx_list = np.linspace(Nx_min, Nx_max, Nx_step, dtype = int)
 
 dx_list, error_list = [], []
 
-simulation_time = 45
+simulation_time = 2
 dt = 0.01
 
 
@@ -32,7 +33,7 @@ temperature_T2 = 100
 
 # For a steel plate
 thermal_conductivity = 30 # (in W.m^-1.K^-1)
-density = 800  # (in kg.m^-3)
+density = 8000  # (in kg.m^-3)
 heat_capacity = 520  # (in J.kg^-1.K^-1)
 
 thermal_diffusivity = thermal_conductivity / (density * heat_capacity)  # (in m^2.s^-1)
@@ -47,7 +48,7 @@ for Nx in Nx_list:
     Ny = Nx
     dx, dy = Lx/Nx, Ly/Ny
 
-    temperature_init_list = np.zeros((Nx, Ny))*temperature_init
+    temperature_init_list = np.ones((Nx, Ny))*temperature_init
 
     ## Meshgrid ##
 
@@ -79,7 +80,9 @@ for Nx in Nx_list:
                                                         temperature_T1, temperature_T2, x_a_lign, x_b_lign, x_c_lign, y_a_lign, y_b_lign, y_c_lign)
 
     ## Error ##
-    temperature_error = np.linalg.norm(temperature_analytical_list - numerical_solution_total[-1])
+    facteur = 1 / (Nx * Ny)
+    temperature_difference = ( temperature_analytical_list - numerical_solution_total[-1] ) * facteur
+    temperature_error = np.sqrt(np.sum(temperature_difference**2))
 
     dx_list.append(dx)
     error_list.append(temperature_error)
@@ -110,4 +113,17 @@ plt.ylabel("ln(error)")
 ### Runtime ###
 Calculation.runtime_program(beginning_date_and_time)
 
+plt.show()
+
+slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(ln_of_dx_list, ln_of_error_list)
+print(f"Alpha estimé: {slope}")
+print(f"Constante C estimée: {np.exp(intercept)}")
+
+plt.figure(2)
+plt.scatter(ln_of_dx_list, ln_of_error_list, marker="x", color="black", label="Données")
+plt.plot(ln_of_dx_list, slope*np.array(ln_of_dx_list) + intercept, color="red", label=f"Régression linéaire: slope={slope:.2f}")
+plt.title("Erreur en fonction du maillage (courbe linéarisée)")
+plt.xlabel("ln(h)")
+plt.ylabel("ln(error)")
+plt.legend()
 plt.show()
