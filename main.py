@@ -16,7 +16,7 @@ SAVE_ANIMATION = False
 ## Discretization ##
 
 Lx, Ly = 10*10**(-2), 10*10**(-2)
-Nx, Ny = 100, 20
+Nx, Ny = 100, 100
 dx, dy, = Lx/Nx, Ly/Ny
 
 simulation_time = 60
@@ -28,7 +28,7 @@ dt = 0.01
 temperature_init = 50
 temperature_T1 = 150
 temperature_T2 = 100
-temperature_init_list = np.zeros((Nx, Ny))*temperature_init
+temperature_init_list = np.ones((Nx, Ny))*temperature_init
 
 # For a steel plate
 thermal_conductivity = 30 # (in W.m^-1.K^-1)
