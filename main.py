@@ -16,10 +16,10 @@ SAVE_ANIMATION = False
 ## Discretization ##
 
 Lx, Ly = 10*10**(-2), 10*10**(-2)
-Nx, Ny = 100, 100
+Nx, Ny = 100, 20
 dx, dy, = Lx/Nx, Ly/Ny
 
-simulation_time = 1
+simulation_time = 60
 dt = 0.01
 
 

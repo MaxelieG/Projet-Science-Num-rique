@@ -5,30 +5,4 @@ Description du projet
 
 Ce projet implémente une résolution numérique de l'équation de la chaleur en régime instationnaire dans un domaine rectangulaire 2D avec conditions aux limites de type Dirichlet. La résolution numérique utilise un schéma implicite et est comparée à la solution analytique afin d'évaluer la précision.
 
-Contexte physique
-
-On considère un domaine rectangulaire :
--Dimensions : $L_x \times L_y$
--Conditions aux limites :
--Température imposée $T_1$ sur la face $y=0$.
--Température imposée $T_2$ sur les trois autres faces ($x=0$, $x=L_x$, $y=L_y$).
-
-Méthodes utilisées
-
-L'équation instationnaire de la chaleur est une parabolique.
-
-1. Solution analytique
-
-
-2. Solution numérique
-
-Le programme utilise une méthode implicite pure avec la technique des directions alternées (ADI), pour résoudre l'équation de la chaleur où $\alpha_x = \frac{a \Delta t}{\Delta x^2}$ et $\alpha_y = \frac{a \Delta t}{\Delta y^2}$.
-
-3. Comparaison et visualisation
-
-Solution numérique obtenue par itération temporelle.
-Solution analytique calculée directement pour comparaison.
-Différence entre les deux solutions visualisée sous forme de carte thermique.
-
-
-
+Le code est subdivisé en plusieurs fichiers. Le principal, \textit{main.py} permet d'obtenir la comparaison entre les solutions analytique et numérique ainsi que l'affichage et l'enregistrement de l'animation représentant le régime transitoire de la solution numérique. Le second code qu'il est possible d'exécuter est \textit{NumericalError.py}, il réutilise les mêmes fonctions que \textit{main.py} mais permet de traiter la dernier question du problème, c'est à dire l'approche de la norme $L_2$ de l'erreur par une formule du type $Ch^\alpha$. Les autres fichiers pythons sont utilisés par les deux principaux et leurs fonctionnement seront expliqués au fur et à mesure du rapport. Le fichier \textit{evolution\_temperature.mp4} est la dernière animation du régime transitoire de la solution numérique sauvegardée.
