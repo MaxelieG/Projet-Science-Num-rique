@@ -14,15 +14,14 @@ beginning_date_and_time = dtm.datetime.now()
 
 Lx, Ly = 10*10**(-2), 10*10**(-2)
 
-Nx_min, Nx_max = 5, 100
-Nx_step = 20
+Nx_min, Nx_max = 5, 50
+Nx_step = 4
 Nx_list = np.linspace(Nx_min, Nx_max, Nx_step, dtype = int)
 
 dx_list, error_list = [], []
 
-simulation_time = 45
-dt = 0.01
-
+simulation_time = 60
+dt_list = [0.01,0.001 ,0.001,0.001]
 
 ## Physical parameters ##
 
@@ -39,15 +38,15 @@ thermal_diffusivity = thermal_conductivity / (density * heat_capacity)  # (in m^
 
 
 ### Calculation for each meshgrid ###
+i=0
 
 for Nx in Nx_list: 
 
-    print(Nx)
-
     Ny = Nx
     dx, dy = Lx/Nx, Ly/Ny
+    dt=dt_list[i]
 
-    temperature_init_list = np.zeros((Nx, Ny))*temperature_init
+    temperature_init_list = np.ones((Nx, Ny))*temperature_init
 
     ## Meshgrid ##
 
@@ -71,18 +70,32 @@ for Nx in Nx_list:
     ### Solutions ###
 
     ## Analytical solutions ##
+
     temperature_analytical_list = AnalyticalSolution.solution(x_list, y_list, Lx, Ly, temperature_T1, temperature_T2, temperature_init_list.copy())
 
+
     ## Numerical solutions ##
+
     x_a_lign, x_b_lign, x_c_lign, y_a_lign, y_b_lign, y_c_lign = NumericalSolution.system_matrix(Nx, Ny, x_fourrier_coeff, y_fourrier_coeff)
     numerical_solution_total = NumericalSolution.solution(simulation_time, Nx, Ny, dt, x_fourrier_coeff, y_fourrier_coeff, x_list, y_list, temperature_init_list.copy(), 
-                                                        temperature_T1, temperature_T2, x_a_lign, x_b_lign, x_c_lign, y_a_lign, y_b_lign, y_c_lign)
+                                                     temperature_T1, temperature_T2, x_a_lign, x_b_lign, x_c_lign, y_a_lign, y_b_lign, y_c_lign)
 
-    ## Error ##
-    temperature_error = np.linalg.norm(temperature_analytical_list - numerical_solution_total[-1])
+    i=i+1
+    if NumericalSolution.caracteristic_time(numerical_solution_total, dt) != None : 
+        
+        ## Difference between analytical and numerical solution ##
+        temperature_difference = np.abs((temperature_analytical_list - numerical_solution_total[-1]))
+        ## Error ##
+        temperature_error = np.sqrt(np.sum(temperature_difference**2 / (Nx * Ny)))
+        print(temperature_difference)
+        dx_list.append(dx)
+        error_list.append(temperature_error)
+        print("dx_list:", dx_list)
+        print("error_list:", error_list)
+        print(Nx_list)
 
-    dx_list.append(dx)
-    error_list.append(temperature_error)
+    
+
 
 plt.figure(1)
 plt.scatter(dx_list, error_list, marker = "x", color = "black")
@@ -108,6 +121,6 @@ plt.ylabel("ln(error)")
 
 
 ### Runtime ###
-Calculation.runtime_program(beginning_date_and_time)
+# Calculation.runtime_program(beginning_date_and_time)
 
 plt.show()
