@@ -16,7 +16,8 @@ SAVE_ANIMATION = False
 ## Discretization ##
 
 Lx, Ly = 10*10**(-2), 10*10**(-2)
-Nx, Ny = 100, 100
+Nx, Ny = 10, 10
+
 dx, dy, = Lx/Nx, Ly/Ny
 
 simulation_time = 60
@@ -76,6 +77,15 @@ numerical_solution_total = NumericalSolution.solution(simulation_time, Nx, Ny, d
 
 temperature_difference = np.abs(temperature_analytical_list - numerical_solution_total[-1])
 
+## Error ##
+temperature_error = np.sqrt(np.sum(temperature_difference**2 / (Nx * Ny)))
+print(temperature_difference)
+print(np.sum(temperature_difference**2))
+print(Nx*Ny)
+print("error", temperature_error)
+print("dx", dx)
+
+
 
 ## Estimation of the caracteristic time of evolution of the system ##
 
@@ -87,7 +97,7 @@ else:
     print(f"Temps caractéristique d'évolution de la solution vers le régime stationnaire: {(evolution_time):.2f}s ")
 
 ### Plotting ###
-
+"""
 ## Animation initialization ##
 print("Création de l'animation")
 # Création de la figure
@@ -147,4 +157,4 @@ Calculation.runtime_program(beginning_date_and_time)
 
 plt.show()
 
-#etiuhqàr
+"""
