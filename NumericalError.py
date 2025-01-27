@@ -17,6 +17,7 @@ Lx, Ly = 10*10**(-2), 10*10**(-2)
 Nx_min, Nx_max = 5, 100
 Nx_step = 20
 Nx_list = np.linspace(Nx_min, Nx_max, Nx_step, dtype = int)
+print(Nx_list)
 
 dx_list, error_list = [], []
 

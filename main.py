@@ -5,7 +5,6 @@ import datetime as dtm
 import AnalyticalSolution
 import NumericalSolution
 import Calculation
-import Graph
 
 
 ### Initialization ###
