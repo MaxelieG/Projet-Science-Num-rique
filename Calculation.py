@@ -78,3 +78,21 @@ def runtime_program (beginning_date_and_time):
         print("Runtime : "+hour+"h"+minute+"min"+second+"s")
     
     return None
+
+def norm_L2 (matrix):
+
+    "Calculate the L2 norm of a matrix"
+
+    Nx = len(matrix)
+    Ny = len(matrix[0])
+
+    norm = 0
+
+    for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+
+            norm += matrix[i][j]*matrix[i][j]
+    
+    norm = norm/(Nx*Ny)
+
+    return norm
